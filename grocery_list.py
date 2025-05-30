@@ -8,7 +8,7 @@ while True:
 
     if action=="add":
        item=input("Enter the item to add : ")
-       grocery_list.insert(item)
+       grocery_list.append(item)
        print(f"{item} added")
 
     elif action=="remove":
