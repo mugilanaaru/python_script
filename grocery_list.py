@@ -4,15 +4,15 @@ grocery_list= []
 
 while True:
     print("\nOptions: add / remove / show / exit")
-    action=input("Enter the option to do")
+    action=input("Enter the option to do : ")
 
     if action=="add":
-       item=input("Enter the item to add")
+       item=input("Enter the item to add : ")
        grocery_list.append(item)
        print(f"{item} added")
 
     elif action=="remove":
-         item=input("Enter the item to remove")
+         item=input("Enter the item to remove : ")
          if item in grocery_list:
             grocery_list.remove(item)
             print(f"{item} removed")
