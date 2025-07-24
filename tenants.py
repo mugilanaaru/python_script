@@ -80,7 +80,7 @@ def select():
 
 def delete(id):
     res=con.cursor()
-    sql="delete from users where id=%s"
+    sql="delete from Tenants where id=%s"
     user = (id,)   ### this is primary key so we are giving ,
     res.execute(sql, user)
     con.commit()
@@ -105,10 +105,12 @@ while True:
 
     elif choice == 3:
         select()
+        break
 
     elif choice == 4:
-        id=input("Enter the id to delete")
+        id=input("Enter the id to delete : ")
         delete(id)
+        break
 
     elif choice == 5:
         break
