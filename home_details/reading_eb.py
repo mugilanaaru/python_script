@@ -8,7 +8,15 @@ def insert(date, metre_number, current_reading, last_reading, total_reading, eb_
     res=con.cursor()
     sql="insert into readings(date,Meter_NO,Current_reading,Last_reading,Total_reading,EB_amount,maintanence,Total_amount) values (%s,%s,%s,%s,%s,%s,%s,%s)"
     user=(date,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
-    res.execute(sql,user)
+    try:
+        res.execute(sql,user)
+    except mysql.connector.Error as err:
+        # handle date format error
+        if err.errno == 1292:
+            print("Date format error. Please use 'YYYY-MM-DD'.")
+        else:
+            print(f"Error: {err}")
+        exit(1)
     con.commit()
     print("Data inserted successfuly")
     print("\n\n\n")
