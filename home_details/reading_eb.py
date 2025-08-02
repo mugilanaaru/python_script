@@ -4,10 +4,10 @@ con=mysql.connector.connect(host="localhost",user="root",password="root",databas
 
 
 
-def insert(date, metre_number, current_reading, last_reading, total_reading, eb_amount, maintanence, total_amount):
+def insert(date, Name, metre_number, current_reading, last_reading, total_reading, eb_amount, maintanence, total_amount):
     res=con.cursor()
-    sql="insert into readings(date,Meter_NO,Current_reading,Last_reading,Total_reading,EB_amount,maintanence,Total_amount) values (%s,%s,%s,%s,%s,%s,%s,%s)"
-    user=(date,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
+    sql="insert into readings(date,Name,Meter_NO,Current_reading,Last_reading,Total_reading,EB_amount,maintanence,Total_amount) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    user=(date,Name,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
     try:
         res.execute(sql,user)
     except mysql.connector.Error as err:
@@ -26,7 +26,7 @@ def select():
     sql="select * from  readings"
     res.execute(sql)
     result=res.fetchall()
-    print(tabulate(result,headers=["date","metre_number","current_reading","last_reading","total_reading","eb_amount","maintanence","total_amount"]))
+    print(tabulate(result,headers=["date","Name","metre_number","current_reading","last_reading","total_reading","eb_amount","maintanence","total_amount"]))
     print("\n\n")
 
 def update():
@@ -160,7 +160,13 @@ while True:
         eb_amount= total_reading * 6
         maintanence = int(input("Enter the maintanence amount : "))
         total_amount = eb_amount + maintanence
-        insert(date,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
+        if metre_number == 109:
+            Name="Gunasekar"
+        elif metre_number == 189:
+            Name="Velu"
+        elif metre_number == 191:
+            Name="Thamizharasan"
+        insert(date,Name,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
         break
 
     elif option == 2:
