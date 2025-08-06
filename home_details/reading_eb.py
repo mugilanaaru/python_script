@@ -165,7 +165,11 @@ while True:
         elif metre_number == 189:
             Name="Velu"
         elif metre_number == 191:
-            Name="Thamizharasan"
+            Name="Indumathi Tamizharasan"
+        elif metre_number == 190:
+            Name="Sampath"
+        elif metre_number == 192:
+            Name="Priya"
         insert(date,Name,metre_number,current_reading,last_reading,total_reading,eb_amount,maintanence,total_amount)
         break
 
