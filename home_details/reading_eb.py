@@ -158,7 +158,8 @@ while True:
         last_reading=int(input("Enter the last month reading : "))
         total_reading= current_reading - last_reading
         eb_amount= total_reading * 6
-        maintanence = int(input("Enter the maintanence amount : "))
+    #    maintanence = int(input("Enter the maintanence amount : "))
+        maintanence = 350
         total_amount = eb_amount + maintanence
         if metre_number == 109:
             Name="Gunasekar"
@@ -184,6 +185,7 @@ while True:
     elif option == 4:
         id = int(input("Enter the id to delete : "))
         delete(id)
+        break
 
     elif option == 5:
         break
