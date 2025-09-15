@@ -80,7 +80,7 @@ print(sum)
 """
 #####################################################
 
-#### Get input for 10 numbers and sum of that 10 numbers and find avg #######
+#### Get input for 10 numbers and sum of that 10 numbers and find avg #
 #### List = [] list
 a=[1,2,3,4,5]
 for i in a:
