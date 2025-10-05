@@ -75,7 +75,7 @@ def select():
     sql="SELECT * from Tenants"
     res.execute(sql)
     result=res.fetchall()
-    print(tabulate(result,headers=["ID","NAME","ADVANCE","EB_number","DATE"]))
+    print(tabulate(result,headers=["ID","NAME","ADVANCE","EB Number","DATE"]))
     print("\n\n")
 
 def delete(id):
