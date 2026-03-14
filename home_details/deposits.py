@@ -10,7 +10,7 @@ def insert(Name, period, Principal_Amount, effect_from_date, maturity_date, Matu
     user=(Name, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest)
     res.execute(sql,user)
     con.commit()
-    print("Data inserted successfuly")
+    print("Data inserted successfully")
     print("\n\n\n")
 
 def select():
