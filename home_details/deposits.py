@@ -133,7 +133,7 @@ while True:
     option = int(input("Enter the choice accordingly : "))
     if option == 1:
         Name= input("Enter the AC holder name : ")
-        period= int(input("Enter the total number of duration for this FD : "))
+        period= input("Enter the total number of duration for this FD : ")
         Principal_Amount= int(input("Enter the amount deposited for this FD : "))
         effect_from_date = input("Enter the date from when it gets effected in this format yy-m-d : ")
         maturity_date = input("Enter the date when the amount gets matured in this format yy-m-d : ")
