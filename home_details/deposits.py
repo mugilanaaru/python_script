@@ -1,6 +1,10 @@
 from tabulate import tabulate
 import mysql.connector
-con=mysql.connector.connect(host="localhost",user="root",password="root",database="home")
+import json
+# Load config from file
+with open("db_config.json") as f:
+    config = json.load(f)
+con = mysql.connector.connect(**config)
 
 
 
