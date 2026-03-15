@@ -4,10 +4,10 @@ con=mysql.connector.connect(host="localhost",user="root",password="root",databas
 
 
 
-def insert(Name, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest):
+def insert(Name, Account_no, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest):
     res=con.cursor()
-    sql="insert into deposits(Name, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest) values (%s,%s,%s,%s,%s,%s,%s)"
-    user=(Name, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest)
+    sql="insert into deposits(Name, AC_No, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest) values (%s,%s,%s,%s,%s,%s,%s)"
+    user=(Name, Account_no, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest)
     res.execute(sql,user)
     con.commit()
     print("Data inserted successfuly")
@@ -18,11 +18,12 @@ def select():
     sql="select * from deposits"
     res.execute(sql)
     result=res.fetchall()
-    print(tabulate(result,headers=["Name","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest"]))
+    print(tabulate(result,headers=["Name","Account_no","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest"]))
     print("\n\n")
 
 def update():
     print("1.Name")
+    print("8.Account_Number")
     print("2.period")
     print("3.Principal_Amount")
     print("4.effect_from_date")
@@ -105,7 +106,18 @@ def update():
         con.commit()
         select()
         print("\n")
-        print("Updated successfully")   
+        print("Updated successfully")
+
+    elif option == 8:
+        pid = input("Enter your id: ")
+        interest = input("Enter the Account Number to update : ")
+        cur = con.cursor()
+        sql = "update deposit set AC_No=%s where ID=%s"
+        cur.execute(sql,(interest, pid))
+        con.commit()
+        select()
+        print("\n")
+        print("Updated successfully")
 
     else:
         print("Invalid Option")
@@ -133,6 +145,7 @@ while True:
     option = int(input("Enter the choice accordingly : "))
     if option == 1:
         Name= input("Enter the AC holder name : ")
+        Account_No= int(input("Enter the Account number for this FD : "))
         period= input("Enter the total number of duration for this FD : ")
         Principal_Amount= int(input("Enter the amount deposited for this FD : "))
         effect_from_date = input("Enter the date from when it gets effected in this format yy-m-d : ")
@@ -152,7 +165,7 @@ while True:
     #        Name="Sampath"
     #    elif metre_number == 192:
     #        Name="Priya"
-        insert(Name,period,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
+        insert(Name,Account_No,period,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
         break
 
     elif option == 2:
