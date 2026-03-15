@@ -6,7 +6,7 @@ con=mysql.connector.connect(host="localhost",user="root",password="root",databas
 
 def insert(Name, Account_no, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest):
     res=con.cursor()
-    sql="insert into deposits(Name, AC_No, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest) values (%s,%s,%s,%s,%s,%s,%s)"
+    sql="insert into deposits(Name, AC_No, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest) values (%s,%s,%s,%s,%s,%s,%s,%s)"
     user=(Name, Account_no, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest)
     res.execute(sql,user)
     con.commit()
