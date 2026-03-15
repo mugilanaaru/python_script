@@ -18,7 +18,7 @@ def select():
     sql="select * from deposits"
     res.execute(sql)
     result=res.fetchall()
-    print(tabulate(result,headers=["Name","Account_no","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest"]))
+    print(tabulate(result,headers=["ID","Name","Account Number","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest %"]))
     print("\n\n")
 
 def update():
