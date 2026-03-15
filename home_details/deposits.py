@@ -134,7 +134,7 @@ def delete(id):
 while True:
     print("1.Enter the values : \n")
     
-    print("2.Show the EB data's : \n")
+    print("2.Show all the Deposits : \n")
 
     print("3.Enter the values to update : \n")
 
