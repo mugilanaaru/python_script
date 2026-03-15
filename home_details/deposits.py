@@ -138,7 +138,7 @@ while True:
         effect_from_date = input("Enter the date from when it gets effected in this format yy-m-d : ")
         maturity_date = input("Enter the date when the amount gets matured in this format yy-m-d : ")
         Maturity_Amount= int(input("Enter the total amount matured for this FD : "))
-        Interest= int(input("Enter the interest rate for this FD : "))
+        Interest= float(input("Enter the interest rate for this FD : "))
     #    maintanence = int(input("Enter the maintanence amount : "))
     #    maintanence = 350
     #    total_amount = eb_amount + maintanence
