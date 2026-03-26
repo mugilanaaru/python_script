@@ -1,3 +1,4 @@
+import deposits2
 from tabulate import tabulate
 import mysql.connector
 import json
@@ -144,6 +145,8 @@ while True:
 
     print("4:Enter the values to delete : \n")
 
+    print("6: Enter the value to select : \n")
+
     print("5.Exit \n")
 
     option = int(input("Enter the choice accordingly : "))
@@ -186,6 +189,10 @@ while True:
         break
 
     elif option == 5:
+        break
+
+    elif option == 6:
+        deposits2.select1()
         break
 
     else:
