@@ -20,9 +20,9 @@ def select1():
     if option == 1:
         Name= input("Enter the Name: ")
         res=con.cursor()
-        sql = "select * from deposits where Name=%s;"
+        sql = "select * from deposits where Name like %s;"
         user=(Name)
-        res.execute(sql,(user,))
+        res.execute(sql,("%" + user + "%",))
         result=res.fetchall()
         print(tabulate(result,headers=["ID","Name","Account Number","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest %"]))
         print("\n\n")
