@@ -1,4 +1,4 @@
-import deposits2
+import deposits_select
 from tabulate import tabulate
 import mysql.connector
 import json
@@ -192,7 +192,7 @@ while True:
         break
 
     elif option == 6:
-        deposits2.select1()
+        deposits_select.select1()
         break
 
     else:
