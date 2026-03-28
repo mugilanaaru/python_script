@@ -18,7 +18,7 @@ print(scores['Science'])
 
 data = {'Monday': 100, 'Tuesday': 200, 'Wednesday': 300}   ### dict structure
 sales = pa.Series(data)      ###### converting dict to series
-print(f"converting dict to series : \n{sales}")
+print(f"converting dict to series : \n{sales}\n\n")
 
 #data frame
 
@@ -28,4 +28,6 @@ data1 = {
     'City': ['Chennai', 'Delhi', 'Munbai', 'kolkata'],
 }
 df = pa.DataFrame(data1)
-print(df)
+print(f"converting data to series : \n{df}\n\n")
+print(f"print only the name in dict as series : \n{df['Name']}\n\n")
+print(f"Printing multiple coloumn in dict as series : \n{df[['Name', 'Age']]}")
