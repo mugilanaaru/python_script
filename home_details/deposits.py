@@ -7,8 +7,6 @@ with open("db_config.json") as f:
     config = json.load(f)
 con = mysql.connector.connect(**config)
 
-
-
 def insert(Name, Account_no, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest):
     res=con.cursor()
     sql="insert into deposits(Name, AC_No, period, Principal_Amount, effect_from_date, maturity_date, Maturity_Amount, Interest) values (%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -23,8 +21,26 @@ def select():
     sql="select * from deposits"
     res.execute(sql)
     result=res.fetchall()
-    print(tabulate(result,headers=["ID","Name","Account Number","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest %"]))
+#    print(tabulate(result,headers=["ID","Name","Account Number","period","Principal_Amount","effect_from_date","maturity_date","Maturity_Amount","Interest %"]))
     print("\n\n")
+    return result
+
+def show_table(data):
+    print(tabulate(data, headers=[
+        "ID","Name","Account Number","period",
+        "Principal_Amount","effect_from_date",
+        "maturity_date","Maturity_Amount","Interest %"
+    ]))
+    print("\n\n")
+
+def process_results():
+    data = select()   # call the first function
+    total_amount = 0
+
+    # Loop through the rows
+    for row in data:
+        total_amount += row[4]
+    print(f"Total deposited amount : {total_amount}")
 
 def update():
     print("1.Name")
@@ -136,18 +152,21 @@ def delete(id):
     print("Data deleted successfully")
     print("\n\n")
 
+
 while True:
-    print("1.Enter the values : \n")
+    print("To insert the values - press 1 : \n")
     
-    print("2.Show all the Deposits : \n")
+    print("To print all the Deposits - press 2 : \n")
 
-    print("3.Enter the values to update : \n")
+    print("To update deposit values - press 3 : \n")
 
-    print("4:Enter the values to delete : \n")
+    print("To delete the deposit values - press 4 : \n")
 
-    print("6: Enter the value to select : \n")
+    print("To print the deposit values example:Name, AC_no - press 5 : \n")
 
-    print("5.Exit \n")
+    print("To print the total amount in deposit - press 6 : \n")
+
+    print("7.Exit \n")
 
     option = int(input("Enter the choice accordingly : "))
     if option == 1:
@@ -159,26 +178,14 @@ while True:
         maturity_date = input("Enter the date when the amount gets matured in this format yy-m-d : ")
         Maturity_Amount= int(input("Enter the total amount matured for this FD : "))
         Interest= float(input("Enter the interest rate for this FD : "))
-    #    maintanence = int(input("Enter the maintanence amount : "))
-    #    maintanence = 350
-    #    total_amount = eb_amount + maintanence
-    #    if metre_number == 109:
-    #        Name="Gunasekar"
-    #    elif metre_number == 189:
-    #        Name="Velu"
-    #    elif metre_number == 191:
-    #        Name="Indumathi Tamizharasan"
-    #    elif metre_number == 190:
-    #        Name="Sampath"
-    #    elif metre_number == 192:
-    #        Name="Priya"
         insert(Name,Account_No,period,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
         break
 
     elif option == 2:
-        select()
-        break
-    
+         data = select()
+         show_table(data)
+         break
+
     elif option == 3:
         update()
         break
@@ -188,11 +195,15 @@ while True:
         delete(id)
         break
 
-    elif option == 5:
+    elif option == 7:
         break
 
-    elif option == 6:
+    elif option == 5:
         deposits_select.select1()
+        break
+
+    elif option ==6:
+        process_results()
         break
 
     else:
