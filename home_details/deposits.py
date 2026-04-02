@@ -1,4 +1,6 @@
+import sys
 import deposits_select
+import deposits_update
 from tabulate import tabulate
 import mysql.connector
 import json
@@ -182,12 +184,12 @@ while True:
         break
 
     elif option == 2:
-         data = select()
-         show_table(data)
-         break
+        data = select()
+        show_table(data)
+        sys.exit()
 
     elif option == 3:
-        update()
+        deposits_update.update()
         break
 
     elif option == 4:
@@ -200,9 +202,9 @@ while True:
 
     elif option == 5:
         deposits_select.select1()
-        break
+        sys.exit()
 
-    elif option ==6:
+    elif option == 6:
         process_results()
         break
 
