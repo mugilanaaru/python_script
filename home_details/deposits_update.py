@@ -24,7 +24,7 @@ def update():
         sql = "update deposits set Name=%s where ID=%s"
         cur.execute(sql,(date, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
 
@@ -35,7 +35,7 @@ def update():
         sql = "update deposits set period=%s where ID=%s"
         cur.execute(sql,(period_date, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
 
@@ -46,7 +46,7 @@ def update():
         sql = "update deposits set Principal_Amount=%s where ID=%s"
         cur.execute(sql,(principal_amount, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
     
@@ -57,7 +57,7 @@ def update():
         sql = "update deposits set effect_from_date=%s where ID=%s"
         cur.execute(sql,(effect_date, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
 
@@ -79,7 +79,7 @@ def update():
         sql = "update deposits set Maturity_Amount=%s where ID=%s"
         cur.execute(sql,(maturity_amount, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
        
@@ -90,7 +90,7 @@ def update():
         sql = "update deposits set Interest=%s where ID=%s"
         cur.execute(sql,(interest, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
 
@@ -101,7 +101,7 @@ def update():
         sql = "update deposits set AC_No=%s where ID=%s"
         cur.execute(sql,(interest, pid))
         con.commit()
-        select()
+        deposits.select()
         print("\n")
         print("Updated successfully")
 
