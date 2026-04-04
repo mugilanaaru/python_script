@@ -1,7 +1,7 @@
 import sys
-import deposits_insert
+import deposits_inrt
 import deposits_select
-import del_update
+import del_updt
 import deposit_values
 from tabulate import tabulate
 import mysql.connector
@@ -31,13 +31,13 @@ while True:
     if option == 1:
         Name= input("Enter the AC holder name : ")
         Account_No= int(input("Enter the Account number for this FD : "))
-        period= input("Enter the total number of duration for this FD : ")
+#        period= input("Enter the total number of duration for this FD : ")
         Principal_Amount= int(input("Enter the amount deposited for this FD : "))
         effect_from_date = input("Enter the date from when it gets effected in this format yy-m-d : ")
         maturity_date = input("Enter the date when the amount gets matured in this format yy-m-d : ")
         Maturity_Amount= int(input("Enter the total amount matured for this FD : "))
         Interest= float(input("Enter the interest rate for this FD : "))
-        deposits_insert.insert(Name,Account_No,period,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
+        deposits_inrt.insert(Name,Account_No,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
         break
 
     elif option == 2:
@@ -46,12 +46,12 @@ while True:
         sys.exit()
 
     elif option == 3:
-        del_update.update()
+        del_updt.update()
         sys.exit
 
     elif option == 4:
         id = int(input("Enter the id to delete : "))
-        del_update.delete(id)
+        del_updt.delete(id)
         sys.exit
 
     elif option == 7:

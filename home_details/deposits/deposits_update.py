@@ -1,4 +1,3 @@
-import deposits
 from tabulate import tabulate
 import mysql.connector
 import json

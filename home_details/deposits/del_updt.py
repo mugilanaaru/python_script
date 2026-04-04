@@ -126,7 +126,7 @@ def update():
 
 def delete(id):
     res=con.cursor()
-    sql="delete from deposit where id=%s"
+    sql="delete from deposits where id=%s"
     user = (id,)   ### this is primary key so we are giving ,
     res.execute(sql, user)
     con.commit()
