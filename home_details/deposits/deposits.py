@@ -47,12 +47,12 @@ while True:
 
     elif option == 3:
         del_update.update()
-        break
+        sys.exit
 
     elif option == 4:
         id = int(input("Enter the id to delete : "))
         del_update.delete(id)
-        break
+        sys.exit
 
     elif option == 7:
         break
@@ -63,7 +63,7 @@ while True:
 
     elif option == 6:
         deposits_select.process_results()
-        break
+        sys.exit
 
     else:
         print("Invalid option \n")

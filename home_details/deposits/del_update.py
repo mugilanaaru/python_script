@@ -18,6 +18,7 @@ def update():
     print("5.maturity_date")
     print("6.Maturity_Amount")
     print("7.Interest")
+    print("9.Exit")
     option = int(input("\nwhich one you want to update : "))
     if option == 1:
         pid = input("Enter your id: ")
@@ -26,9 +27,11 @@ def update():
         sql = "update deposits set Name=%s where ID=%s"
         cur.execute(sql,(date, pid))
         con.commit()
-        deposits_select.select()
+        data = deposits_select.select()
+        deposits_select.show_table(data)
         print("\n")
         print("Updated successfully")
+        update()
 
     elif option == 2:
         pid = input("Enter your id: ")
@@ -40,6 +43,7 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
 
     elif option == 3:
         pid = input("Enter your id: ")
@@ -48,9 +52,11 @@ def update():
         sql = "update deposits set Principal_Amount=%s where ID=%s"
         cur.execute(sql,(principal_amount, pid))
         con.commit()
-        deposits_select.select()
+        data = deposits_select.select()
+        deposits_select.show_table(data)
         print("\n")
         print("Updated successfully")
+        update()
     
     elif option == 4:
         pid = input("Enter your id: ")
@@ -62,6 +68,7 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
 
     elif option == 5:
         pid = input("Enter your id: ")
@@ -73,6 +80,7 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
 
     elif option == 6:
         pid = input("Enter your id: ")
@@ -84,6 +92,7 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
        
     elif option == 7:
         pid = input("Enter your id: ")
@@ -95,6 +104,7 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
 
     elif option == 8:
         pid = input("Enter your id: ")
@@ -106,6 +116,10 @@ def update():
         deposits_select.select()
         print("\n")
         print("Updated successfully")
+        update()
+
+    elif option == 9:
+        sys.exit
 
     else:
         print("Invalid Option")
