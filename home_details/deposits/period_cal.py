@@ -14,7 +14,7 @@ def period(effect_from_date,maturity_date):
     difference = end_date - start_date
 #    period_def = difference.days
 
-    return difference.days
+    return f"{difference.days} days"
 
  #   print(f"difference = {period}")
 
