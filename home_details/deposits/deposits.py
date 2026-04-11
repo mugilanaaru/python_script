@@ -48,12 +48,12 @@ while True:
 
     elif option == 3:
         del_updt.update()
-        sys.exit
+        sys.exit()
 
     elif option == 4:
         id = int(input("Enter the id to delete : "))
         del_updt.delete(id)
-        sys.exit
+        sys.exit()
 
     elif option == 7:
         break
@@ -64,7 +64,7 @@ while True:
 
     elif option == 6:
         deposits_select.process_results()
-        sys.exit
+        sys.exit()
 
     else:
         print("Invalid option \n")
