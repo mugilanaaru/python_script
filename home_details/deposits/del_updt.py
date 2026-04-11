@@ -18,7 +18,8 @@ def update():
     print("5.maturity_date")
     print("6.Maturity_Amount")
     print("7.Interest")
-    print("9.Exit")
+    print("9.Bank Name")
+    print("10.Exit")
     option = int(input("\nwhich one you want to update : "))
     if option == 1:
         pid = input("Enter your id: ")
@@ -119,6 +120,18 @@ def update():
         update()
 
     elif option == 9:
+        pid = input("Enter your id: ")
+        bank_name = input("Enter the Bank Name : ")
+        cur = con.cursor()
+        sql = "update deposits set Bank_Name=%s where ID=%s"
+        cur.execute(sql,(bank_name, pid))
+        con.commit()
+        deposits_select.select()
+        print("\n")
+        print("Updated successfully")
+        update()
+
+    elif option == 10:
         sys.exit
 
     else:

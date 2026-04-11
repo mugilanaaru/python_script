@@ -19,7 +19,7 @@ def show_table(data):
     print(tabulate(data, headers=[
         "ID","Name","Account Number","period",
         "Principal_Amount","effect_from_date",
-        "maturity_date","Maturity_Amount","Interest %"
+        "maturity_date","Maturity_Amount","Interest %","Bank_Name"
     ]))
     print("\n\n")
 

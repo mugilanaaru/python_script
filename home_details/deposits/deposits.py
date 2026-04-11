@@ -37,7 +37,8 @@ while True:
         maturity_date = input("Enter the date when the amount gets matured in this format yy-m-d : ")
         Maturity_Amount= int(input("Enter the total amount matured for this FD : "))
         Interest= float(input("Enter the interest rate for this FD : "))
-        deposits_inrt.insert(Name,Account_No,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest)
+        Bank_Name = input("Enter the deposited bank name : ")
+        deposits_inrt.insert(Name,Account_No,Principal_Amount,effect_from_date,maturity_date,Maturity_Amount,Interest,Bank_Name)
         break
 
     elif option == 2:
