@@ -20,7 +20,7 @@ def show_table(data):
     print(tabulate(data, headers=[
         "ID","Name","Ac No","period",
         "Amount","Start Date",
-        "maturity_date","Maturity_Amount","Interest %","Bank"
+        "maturity_date","Maturity_Amount","Interest","Bank"
     ], tablefmt="github"))
     print("\n\n")
 

@@ -98,9 +98,10 @@ def update():
     elif option == 7:
         pid = input("Enter your id: ")
         interest = input("Enter the Interest amount to update : ")
+        Interest_rate= f"{interest} %"
         cur = con.cursor()
         sql = "update deposits set Interest=%s where ID=%s"
-        cur.execute(sql,(interest, pid))
+        cur.execute(sql,(Interest_rate, pid))
         con.commit()
         deposits_select.select()
         print("\n")
