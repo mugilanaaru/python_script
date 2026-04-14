@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from textwrap import shorten
 import mysql.connector
 import json
 # Load config from file
@@ -17,10 +18,10 @@ def select():
 
 def show_table(data):
     print(tabulate(data, headers=[
-        "ID","Name","Account Number","period",
-        "Principal_Amount","effect_from_date",
-        "maturity_date","Maturity_Amount","Interest %","Bank_Name"
-    ]))
+        "ID","Name","Ac No","period",
+        "Amount","Start Date",
+        "maturity_date","Maturity_Amount","Interest %","Bank"
+    ], tablefmt="github"))
     print("\n\n")
 
 def process_results():

@@ -1,4 +1,5 @@
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 def period(effect_from_date,maturity_date):
     start_date = datetime.strptime(effect_from_date, "%Y-%m-%d")
@@ -11,10 +12,10 @@ def period(effect_from_date,maturity_date):
     print("Start:", start_tuple)
     print("End:", end_tuple)
 
-    difference = end_date - start_date
+    difference = relativedelta(end_date, start_date)
 #    period_def = difference.days
 
-    return f"{difference.days} days"
+    return f"{difference.years} years {difference.months} months {difference.days} days"
 
  #   print(f"difference = {period}")
 
