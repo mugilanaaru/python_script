@@ -32,3 +32,4 @@ def process_results():
     for row in data:
         total_amount += row[4]
     print(f"Total deposited amount : {total_amount}")
+    print("\n")
