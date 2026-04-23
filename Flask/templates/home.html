@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Tenant details</title>
+    </head>
+    <body>
+        <h1>Tenant Details</h1>
+
+        <p><a href="{{url_for('addusers')}}">Add Users</a></p>
+        <table style="width:100%; border-collapse: collapse; text-align: center;">
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ccc;">ID</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">Name</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">Advance</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">EB Number</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">EDIT</th>
+                <th style="padding: 10px; border: 1px solid #ccc;">DELETE</th>
+            </tr>
+            {% for data in datas %}
+                <tr>
+                    <td>{{data.ID}}</td>
+                    <td>{{data.NAME}}</td>
+                    <td>{{data.Advance}}</td>
+                    <td>{{data.EB_Number}}</td>
+                    <td><a href="{{url_for('edituser',id=data.ID)}}">Edit</a></td>
+                </tr>
+            {% endfor %}    
+        </table>
+    </body>
+</html>
