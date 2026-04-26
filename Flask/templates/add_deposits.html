@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Enter the deposit details here</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+    <body>
+    <h1>Add user details</h1>
+        <form action='' method='post'>
+            <label>Name:</label>
+            <input type="text" name="Name">
+            <label>Account Number:</label>
+            <input type="text" name="Account_Number">
+            <label>period:</label>
+            <input type="text" name="period">
+            <label>Principal Amount:</label>
+            <input type="text" name="Principal_Amount">
+            <label>Date:</label>
+            <input type="text" name="Date">
+            <label>Maturity Date:</label>
+            <input type="text" name="Maturity_Date">
+            <label>Maturity Amount:</label>
+            <input type="text" name="Maturity_Amount">
+            <label>Interest Rate:</label>
+            <input type="text" name="Interest_Rate">
+            <label>Bank Details:</label>
+            <input type="text" name="Bank_Details">
+            <input type='submit' value='save details'>
+        </form>
+    </body>
+</html>

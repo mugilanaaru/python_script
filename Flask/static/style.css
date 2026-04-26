@@ -1,0 +1,192 @@
+/* General page styling */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 20px;
+  background: linear-gradient(to right, #f0f4f8, #e6ebf2);
+  color: #333;
+}
+
+/* Headings */
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #222;
+  letter-spacing: 1px;
+}
+
+/* Links (Add Users, Edit/Delete) */
+a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #0056b3;
+}
+
+/* Form styling */
+form {
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 25px;
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #444;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(to right, #007BFF, #0056b3);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+input[type="submit"]:hover {
+  background: linear-gradient(to right, #0056b3, #004080);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  white-space: nowrap;
+}
+
+th {
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #eef5ff;
+  transition: background 0.3s ease;
+}
+
+/* Action links (EDIT/DELETE) */
+td a {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+td a.edit {
+  background-color: #28a745;
+  color: white;
+}
+td a.edit:hover {
+  background-color: #1e7e34;
+}
+
+td a.delete {
+  background-color: #dc3545;
+  color: white;
+}
+td a.delete:hover {
+  background-color: #a71d2a;
+}
+
+/* Newly added */
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;   /* space above dropdown */
+  margin-left: 5px;   /* optional horizontal spacing */
+}
+
+/* Dropdown button */
+.dropbtn {
+  background-color: #007BFF;   /* modern blue */
+  color: white;
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for button */
+.dropbtn:hover {
+  background-color: #0056b3;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #b6b8c8;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  z-index: 1;
+}
+
+/* Links inside dropdown */
+.dropdown-content a {
+  color: #333;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect for links */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
