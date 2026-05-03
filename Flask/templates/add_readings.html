@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Enter the ED Readings details here</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+    <body>
+    <h1>Add EB details</h1>
+        <form action='' method='post'>
+            <label>Date:</label>
+            <input type="date" name="Date">
+            <label for="Meter_Number">Select Meter Number:</label>
+            <select name="Meter_Number" id="Meter_Number">
+              <option value="109">109</option>
+              <option value="189">189</option>
+              <option value="191">191</option>
+              <option value="190">190</option>
+              <option value="192">192</option>
+            </select>
+            <label>Current reading:</label>
+            <input type="text" name="Current_reading">
+            <label>Last reading:</label>
+            <input type="text" name="Last_reading">
+            <input type='submit' value='save details'>
+        </form>
+    </body>
+</html>

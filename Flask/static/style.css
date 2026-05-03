@@ -190,3 +190,46 @@ td a.delete:hover {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+/* Dropdown (select) styling */
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Date input styling */
+input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="date"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* tabular colour */
+.gunasekar { background-color: #ffcccb !important; } /* light red */
+.velu { background-color: #c8e6c9 !important; }     /* light green */
+.indumathi { background-color: #c2bdcb !important; }    /* light purple */
+.priya { background-color:#73ae81 !important;}
+.sampath { background-color: #fff9c4 !important; }  /* light yellow */

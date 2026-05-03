@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Tenant details</title>
+        <title>MUGILAN</title>
         <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
     </head>
     <body>
@@ -46,9 +46,18 @@
 </div>
 
         <div class="dropdown">
-  <button class="dropbtn">Add Users</button>
+  <button class="dropbtn">Tenant Details</button>
   <div class="dropdown-content">
-    <a href="{{ url_for('addusers') }}">Tenant</a>
+    <a href="{{ url_for('list_tenents') }}" target="_blank">Show Tenents</a>
+    <a href="{{ url_for('add_tenents') }}" target="_blank">Add Tenents</a>
+  </div>
+</div>
+
+        <div class="dropdown">
+  <button class="dropbtn">EB Details</button>
+  <div class="dropdown-content">
+    <a href="{{ url_for('list_readings') }}" target="_blank">Show Readings</a>
+    <a href="{{ url_for('add_readings') }}" target="_blank">Add Readings</a>
   </div>
 </div>
 

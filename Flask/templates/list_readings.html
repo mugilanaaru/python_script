@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>EB Reading Details</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+    <body>
+        <h1>ED Readings</h1>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Meter Number</th>
+                <th>Current Reading</th>
+                <th>Last Month Reading</th>
+                <th>Total Reading</th>
+                <th>EB Amount</th>
+                <th>Maintanence</th>
+                <th>Total Amount</th>
+
+            </tr>
+            {% for data in datas %}
+                <tr class="
+            {% if data.Name == 'Gunasekar' %}gunasekar
+            {% elif data.Name == 'Velu' %}velu
+            {% elif data.Name == 'Indumathi Tamizharasan' %}indumathi
+            {% elif data.Name == 'Priya' %}priya
+            {% elif data.Name == 'Sampath' %}sampath
+            {% else %}default-row
+            {% endif %}">
+                    <td>{{data.ID}}</td>
+                    <td>{{data.Date}}</td>
+                    <td>{{data.Name}}</td>
+                    <td>{{data.Meter_NO}}</td>
+                    <td>{{data.Current_reading}}</td>
+                    <td>{{data.Last_reading}}</td>
+                    <td>{{data.Total_reading}}</td>
+                    <td>{{data.EB_Amount}}</td>
+                    <td>{{data.maintanence}}</td>
+                    <td>{{data.Total_Amount}}</td>
+                    <td><a href="{{url_for('edituser',id=data.ID)}}">Edit</a></td>
+                    <td><a onclick="return confirm('Are you sure to delete {{data.Name}}?');" href="{{url_for('deleteuser',id=data.ID,table='readings')}}">Delete</a></td>
+                </tr>
+            {% endfor %}    
+        </table>
+
+    </body>
+</html>

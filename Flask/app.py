@@ -27,6 +27,21 @@ def home():
         conn.close()
     return render_template("home.html", datas=res)
 
+
+#### List Tenents
+@app.route("/list_tenents")
+def list_tenents():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM Tenants"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+    return render_template("list_tenents.html", datas=res)
+
+
 #### for deposits
 @app.route("/deposits")
 def home_deposits():
@@ -71,7 +86,7 @@ def adddeposits():
 
 #user insert
 @app.route("/add_user",methods=['GET','POST'])
-def addusers():
+def add_tenents():
     if request.method=='POST':
         NAME=request.form['NAME']
         Advance=request.form['Advance']
@@ -128,6 +143,11 @@ def deleteuser(id, table):
                 cursor.execute(sql, (id,))
                 flash('Deposit record deleted')
 
+            elif table == "readings":
+                sql = "DELETE FROM readings WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('readings record deleted')
+
             else:
                 flash('Invalid table specified')
 
@@ -135,6 +155,53 @@ def deleteuser(id, table):
     finally:
         conn.close()
     return redirect(url_for("home"))
+
+###### EB Readings list #########
+@app.route("/list_readings")
+def list_readings():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM readings"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+    return render_template("list_readings.html", datas=res)
+
+
+###### EB Readings ###########################
+
+@app.route("/add_readings",methods=['GET','POST'])
+def add_readings():
+    if request.method=='POST':
+        Date=request.form['Date']
+        Meter_Number=request.form['Meter_Number']
+        Current_reading=request.form['Current_reading']
+        Last_reading=request.form['Last_reading']
+        total_reading= int(Current_reading) - int(Last_reading)
+        eb_amount= total_reading * 6
+    #    maintanence = int(input("Enter the maintanence amount : "))
+        maintanence = 350
+        total_amount = int(eb_amount) + int(maintanence)
+        names = {
+            "109": "Gunasekar",
+            "189": "Velu",
+            "191": "Indumathi Tamizharasan",
+            "190": "Sampath",
+            "192": "Priya"
+}
+        Name = names.get(Meter_Number, "Unknown")
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into readings(Date,Name,Meter_NO,Current_reading,Last_reading,Total_reading,EB_Amount,maintanence,Total_Amount) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,[Date,Name,Meter_Number,Current_reading,Last_reading,total_reading,eb_amount,maintanence,total_amount])
+        conn.commit()
+        conn.close()
+        flash('EB details added')
+        return redirect(url_for("list_readings"))
+    return render_template("add_readings.html")
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
