@@ -1,7 +1,9 @@
 from flask import Flask, render_template,url_for,redirect,request,flash
+import os
 from utils.period_cal import calculate_period
 #from deposits import deposits_bp
 import pymysql
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -15,17 +17,43 @@ def get_connection():
         cursorclass=pymysql.cursors.DictCursor
     )
 
+##########################################
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/upload", methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            # normalize filename
+            filename = secure_filename(file.filename)
+            filename = filename.lower()   # force lowercase filename
+
+            # extract extension safely
+            ext = filename.rsplit('.', 1)[1] if '.' in filename else ''
+
+            if ext in ALLOWED_EXTENSIONS:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                flash(f"File {filename} uploaded successfully!")
+                return redirect(url_for('home'))
+            else:
+                flash("Invalid file type")
+                return redirect(url_for('upload'))
+    return render_template("upload.html")
+
+############################################
+
 @app.route("/")
 def home():
-    conn = get_connection()
-    try:
-        with conn.cursor() as cursor:
-            sql = "SELECT * FROM Tenants"
-            cursor.execute(sql)
-            res = cursor.fetchall()
-    finally:
-        conn.close()
-    return render_template("home.html", datas=res)
+    # list all files in static/uploads
+    files = os.listdir("static/uploads")
+    return render_template("home.html", files=files)
 
 
 #### List Tenents

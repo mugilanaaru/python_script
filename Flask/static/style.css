@@ -233,3 +233,42 @@ input[type="date"]:focus {
 .indumathi { background-color: #c2bdcb !important; }    /* light purple */
 .priya { background-color:#73ae81 !important;}
 .sampath { background-color: #fff9c4 !important; }  /* light yellow */
+
+
+.image-row {
+    display: flex;          /* puts items side by side */
+    flex-wrap: wrap;        /* allows wrapping to next line if too many */
+    gap: 15px;              /* spacing between images */
+    justify-content: flex-start; /* align images to the left */
+}
+
+.image-row img {
+    border: 1px solid #ccc; /* optional styling */
+    padding: 5px;
+    max-width: 250px;       /* control size */
+    height: auto;
+}
+
+.btn-upload {
+    background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  /* New alignment */
+  position: absolute;
+    top: 20px;       /* distance from top */
+    right: 20px;     /* distance from right */
+}
+
+.btn-upload:hover {
+    background-color: #b30012;   /* darker blue on hover */
+    transform: translateY(-2px); /* subtle lift effect */
+}
