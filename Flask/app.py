@@ -109,7 +109,7 @@ def adddeposits():
         conn.commit()
         conn.close()
         flash('User details added')
-        return redirect(url_for("deposits"))
+        return redirect(url_for("home_deposits"))
     return render_template("add_deposits.html")
 
 #user insert
