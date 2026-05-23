@@ -273,6 +273,25 @@ def filter_results():
 
     return render_template("filter_results.html", datas=results)
 
+######################### deposits summary ###############################
+@app.route("/deposits_summary")
+def deposits_summary():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            # Group deposits by Name and sum the Principal_Amount
+            sql = """
+                SELECT Name, SUM(Principal_Amount) AS total_amount
+                FROM deposits
+                GROUP BY Name
+            """
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+
+    return render_template("deposits_summary.html", datas=res)
+
 
 
 ## Register blueprints

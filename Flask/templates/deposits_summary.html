@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deposits Summary</title>
+</head>
+<body>
+    <h1>Deposits Total by Name</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Total Deposited Amount</th>
+        </tr>
+        {% for data in datas %}
+        <tr>
+            <td>{{ data.Name }}</td>
+            <td>{{ data.total_amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
