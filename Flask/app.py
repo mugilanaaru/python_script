@@ -231,6 +231,50 @@ def add_readings():
         return redirect(url_for("list_readings"))
     return render_template("add_readings.html")
 
+
+###################### Adding for filter ##############################
+@app.route("/filter_deposits", methods=['GET', 'POST'])
+def filter_deposits():
+    if request.method == 'POST':
+        option = request.form['option']
+        value = request.form['value']
+        return redirect(url_for('filter_results', option=option, value=value))
+    return render_template("filter_deposits.html")
+
+###################  Addng filter results ##############################
+@app.route("/filter_results")
+def filter_results():
+    option = request.args.get('option')
+    value = request.args.get('value')
+
+    mapping = {
+        '1': 'Name',
+        '2': 'AC_No',
+        '3': 'period',
+        '4': 'Principal_Amount',
+        '5': 'effect_from_date',
+        '6': 'maturity_date',
+        '7': 'Maturity_Amount',
+        '8': 'Interest',
+        '9': 'Bank_Name'
+    }
+    column = mapping.get(option)
+
+    results = []
+    if column:
+        conn = get_connection()
+        try:
+            with conn.cursor() as cursor:
+                sql = f"SELECT * FROM deposits WHERE {column} LIKE %s"
+                cursor.execute(sql, ("%" + value + "%",))
+                results = cursor.fetchall()
+        finally:
+            conn.close()
+
+    return render_template("filter_results.html", datas=results)
+
+
+
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
 

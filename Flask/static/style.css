@@ -272,3 +272,29 @@ input[type="date"]:focus {
     background-color: #b30012;   /* darker blue on hover */
     transform: translateY(-2px); /* subtle lift effect */
 }
+
+.btn-round {
+    background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  /* New alignment */
+  position: absolute;
+    top: 20px;       /* distance from top */
+    right: 20px;     /* distance from right */
+}
+
+.btn-round:hover {
+    background-color: #b30012;   /* darker blue on hover */
+    transform: translateY(-2px); /* subtle lift effect */
+}
+
+
