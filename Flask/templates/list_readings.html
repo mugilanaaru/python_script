@@ -39,7 +39,7 @@
                     <td>{{data.EB_Amount}}</td>
                     <td>{{data.maintanence}}</td>
                     <td>{{data.Total_Amount}}</td>
-                    <td><a href="{{url_for('edituser',id=data.ID)}}">Edit</a></td>
+                    <td><a href="{{url_for('edituser',id=data.ID,table='readings')}}">Edit</a></td>
                     <td><a onclick="return confirm('Are you sure to delete {{data.Name}}?');" href="{{url_for('deleteuser',id=data.ID,table='readings')}}">Delete</a></td>
                 </tr>
             {% endfor %}    

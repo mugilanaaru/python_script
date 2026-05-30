@@ -22,7 +22,7 @@
                     <td>{{data.NAME}}</td>
                     <td>{{data.Advance}}</td>
                     <td>{{data.EB_Number}}</td>
-                    <td><a href="{{url_for('edituser',id=data.ID)}}">Edit</a></td>
+                    <td><a href="{{url_for('edituser',id=data.ID,table='Tenants')}}">Edit</a></td>
                     <td><a onclick="return confirm('Are you sure to delete {{data.NAME}}?');" href="{{url_for('deleteuser',id=data.ID,table='Tenants')}}">Delete</a></td>
                 </tr>
             {% endfor %}    

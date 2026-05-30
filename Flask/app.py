@@ -130,29 +130,60 @@ def add_tenents():
     return render_template("add_user.html")
 
 #edit user
-@app.route("/useredit/<string:id>",methods=['GET','POST'])
-
-def edituser(id):
-
-    if request.method=='POST':
-        NAME=request.form['NAME']
-        Advance=request.form['Advance']
-        EB_Number=request.form['EB_Number']
-        conn= get_connection()
+@app.route("/edit/<string:table>/<string:id>", methods=['GET','POST'])
+def edituser(table, id):
+    conn = get_connection()
+    if request.method == 'POST':
         with conn.cursor() as cursor:
-            sql="update Tenants set NAME=%s,Advance=%s,EB_Number=%s where ID=%s"
-            cursor.execute(sql,[NAME,Advance,EB_Number,id])
+            if table == "Tenants":
+                NAME = request.form['NAME']
+                Advance = request.form['Advance']
+                EB_Number = request.form['EB_Number']
+                sql = "UPDATE Tenants SET NAME=%s, Advance=%s, EB_Number=%s WHERE ID=%s"
+                cursor.execute(sql, [NAME, Advance, EB_Number, id])
+
+            elif table == "deposits":
+                Name = request.form['Name']
+                Account_Number = request.form['Account_Number']
+                Principal_Amount = request.form['Principal_Amount']
+                Date = request.form['Date']
+                Maturity_Date = request.form['Maturity_Date']
+                Maturity_Amount = request.form['Maturity_Amount']
+                Interest_Rate = request.form['Interest_Rate']
+                Bank_Details = request.form['Bank_Details']
+                sql = "UPDATE deposits SET Name=%s, Account_Number=%s, Principal_Amount=%s, Date=%s, Maturity_Date=%s, Maturity_Amount=%s, Interest_Rate=%s, Bank_Details=%s  WHERE ID=%s"
+                cursor.execute(sql, [Name, Account_Number, Principal_Amount, Date, Maturity_Date, Maturity_Amount, Interest_Rate, Bank_Details, id])
+
+            elif table == "readings":
+                Date = request.form['Date']
+                Current_reading = request.form['Current_reading']
+                Last_reading = request.form['Last_reading']
+                total_reading= int(Current_reading) - int(Last_reading)
+                eb_amount= total_reading * 6
+                #    maintanence = int(input("Enter the maintanence amount : "))
+                maintanence = 350
+                total_amount = int(eb_amount) + int(maintanence)
+                sql = "UPDATE readings SET Date=%s, Current_reading=%s, Last_reading=%s, total_reading=%s, eb_amount=%s, total_amount=%s  WHERE ID=%s"
+                cursor.execute(sql, [Date, Current_reading, Last_reading, total_reading, eb_amount, total_amount, id])
+
+            else:
+                flash("Invalid table specified")
+                return redirect(url_for("home"))
+
         conn.commit()
         conn.close()
-        flash("user details updated")
+        flash(f"{table} record updated")
         return redirect(url_for("home"))
-    
-    conn = get_connection()
+
+    # GET request: fetch record for pre-filling form
     with conn.cursor() as cursor:
-            sql = "SELECT * FROM Tenants where ID=%s"
-            cursor.execute(sql,[id])
-            res = cursor.fetchone()
-    return render_template("useredit.html",datas=res)
+        sql = f"SELECT * FROM {table} WHERE ID=%s"
+        cursor.execute(sql, [id])
+        res = cursor.fetchone()
+    conn.close()
+
+    return render_template("useredit.html", datas=res, table=table)
+
 
 # Delete User
 #@app.route("/deleteuser/<string:id>",methods=['GET','POST'])
