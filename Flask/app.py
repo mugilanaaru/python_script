@@ -69,7 +69,24 @@ def list_tenents():
         conn.close()
     return render_template("list_tenents.html", datas=res)
 
+#################  Tenants toggle button for active in active ###########
+@app.route("/toggle/<int:id>")
+def toggle_status(id):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT is_active FROM Tenants WHERE ID=%s", (id,))
+            current = cursor.fetchone()["is_active"]
 
+            new_status = 0 if current == 1 else 1
+            cursor.execute("UPDATE Tenants SET is_active=%s WHERE ID=%s", (new_status, id))
+            conn.commit()
+    finally:
+        conn.close()
+    return redirect(url_for("list_tenents"))
+
+
+###########
 #### for deposits
 @app.route("/deposits")
 def home_deposits():

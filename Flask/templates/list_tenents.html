@@ -22,6 +22,15 @@
                     <td>{{data.NAME}}</td>
                     <td>{{data.Advance}}</td>
                     <td>{{data.EB_Number}}</td>
+                    <td>
+                       <a href="{{ url_for('toggle_status', id=data.ID) }}">
+                           {% if data.is_active == 1 %}
+                               <button class="toggle-btn on">IN</button>
+                           {% else %}
+                               <button class="toggle-btn off">OUT</button>
+                           {% endif %}
+                       </a>
+                    </td>
                     <td><a href="{{url_for('edituser',id=data.ID,table='Tenants')}}">Edit</a></td>
                     <td><a onclick="return confirm('Are you sure to delete {{data.NAME}}?');" href="{{url_for('deleteuser',id=data.ID,table='Tenants')}}">Delete</a></td>
                 </tr>

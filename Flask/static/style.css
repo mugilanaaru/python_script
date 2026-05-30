@@ -321,3 +321,18 @@ input[type="date"]:focus {
     transform: translateY(-2px); /* subtle lift effect */
 }
 
+
+/* adding for active button */
+.toggle-btn {
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.toggle-btn.on { background-color: #28a745; }  /* Green */
+.toggle-btn.off { background-color: #dc3545; } /* Red */
+
+
