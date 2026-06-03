@@ -19,19 +19,19 @@
             <label>Name:</label>
             <input type="text" name="Name" value="{{ datas.Name }}">
             <label>Account Number:</label>
-            <input type="text" name="Account_Number" value="{{ datas.Account_Number }}">
+            <input type="text" name="Account_Number" value="{{ datas.AC_No }}">
             <label>Principal Amount:</label>
             <input type="text" name="Principal_Amount" value="{{ datas.Principal_Amount }}">
             <label>Date:</label>
-            <input type="Date" name="Date" value="{{ datas.Date }}">
+            <input type="Date" name="Date" value="{{ datas.effect_from_date }}">
             <label>Maturity Date:</label>
-            <input type="date" name="Maturity_Date" value="{{ datas.Maturity_Date }}">
+            <input type="date" name="Maturity_Date" value="{{ datas.maturity_date }}">
             <label>Maturity Amount:</label>
             <input type="text" name="Maturity_Amount" value="{{ datas.Maturity_Amount }}">
             <label>Interest Rate:</label>
-            <input type="text" name="Interest_Rate" value="{{ datas.Interest_Rate }}">
+            <input type="text" name="Interest_Rate" value="{{ datas.Interest }}">
             <label>Bank Details:</label>
-            <input type="text" name="Bank_Details" value="{{ datas.Bank_Details }}">
+            <input type="text" name="Bank_Details" value="{{ datas.Bank_Name }}">
 
         {% elif table == "readings" %}
             <label>Date:</label>

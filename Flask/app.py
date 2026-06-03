@@ -3,17 +3,20 @@ import os
 from utils.period_cal import calculate_period
 #from deposits import deposits_bp
 import pymysql
+import configparser     ##### module for config.ini file
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-# Create a reusable connection function
 def get_connection():
+    parser = configparser.ConfigParser()
+    parser.read("db_config.ini")
+
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="root",
-        database="home",
+        host=parser["mysql"]["host"],
+        user=parser["mysql"]["user"],
+        password=parser["mysql"]["password"],
+        database=parser["mysql"]["database"],
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -166,10 +169,17 @@ def edituser(table, id):
                 Date = request.form['Date']
                 Maturity_Date = request.form['Maturity_Date']
                 Maturity_Amount = request.form['Maturity_Amount']
-                Interest_Rate = request.form['Interest_Rate']
+                Interest_Rate=request.form['Interest_Rate']
                 Bank_Details = request.form['Bank_Details']
-                sql = "UPDATE deposits SET Name=%s, Account_Number=%s, Principal_Amount=%s, Date=%s, Maturity_Date=%s, Maturity_Amount=%s, Interest_Rate=%s, Bank_Details=%s  WHERE ID=%s"
-                cursor.execute(sql, [Name, Account_Number, Principal_Amount, Date, Maturity_Date, Maturity_Amount, Interest_Rate, Bank_Details, id])
+
+                # Call helper function to calculate period
+                period_days, period_readable = calculate_period(Date, Maturity_Date)
+
+                # Decide what to store (days or readable string)
+                period = period_readable   # or use period_readable
+
+                sql = "UPDATE deposits SET Name=%s, AC_No=%s, period=%s, Principal_Amount=%s, effect_from_date=%s, Maturity_Date=%s, Maturity_Amount=%s, Interest=%s, Bank_Name=%s  WHERE ID=%s"
+                cursor.execute(sql, [Name, Account_Number, period, Principal_Amount, Date, Maturity_Date, Maturity_Amount, Interest_Rate, Bank_Details, id])
 
             elif table == "readings":
                 Date = request.form['Date']
