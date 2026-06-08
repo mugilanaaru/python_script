@@ -1,8 +1,8 @@
 from flask import Flask, render_template,url_for,redirect,request,flash
 import os
-from utils.period_cal import calculate_period
+from utils.period_cal import calculate_period   #### module for date difference calculate
 #from deposits import deposits_bp
-import pymysql
+import pymysql          #####  module for mysql connect
 import configparser     ##### module for config.ini file
 from werkzeug.utils import secure_filename
 
