@@ -1,4 +1,5 @@
 from flask import Flask, render_template,url_for,redirect,request,flash
+from datetime import date, datetime, timedelta
 import os
 from utils.period_cal import calculate_period   #### module for date difference calculate
 #from deposits import deposits_bp
@@ -101,7 +102,19 @@ def home_deposits():
             res = cursor.fetchall()
     finally:
         conn.close()
-    return render_template("deposits.html", datas=res)
+
+    # Convert maturity_date to a proper date object if it’s a string        #### newly added for maturity date to show warning
+    for row in res:
+        if isinstance(row['maturity_date'], str):
+            row['maturity_date'] = datetime.strptime(row['maturity_date'], "%Y-%m-%d").date()
+
+    # Pass both today and threshold date (today + 30 days)
+    return render_template(
+        "deposits.html",
+        datas=res,
+        current_date=date.today(),
+        threshold_date=date.today() + timedelta(days=30))
+    #return render_template("deposits.html", datas=res)     #### normal on commented out
 
 @app.route("/add_deposits",methods=['GET','POST'])
 def adddeposits():

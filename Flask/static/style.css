@@ -335,4 +335,22 @@ input[type="date"]:focus {
 .toggle-btn.on { background-color: #28a745; }  /* Green */
 .toggle-btn.off { background-color: #dc3545; } /* Red */
 
+/* adding for maturitu expire warning and alert */
+tr.expired {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+tr.warning {
+    background-color: orange;
+    color: black;
+    font-weight: bold;
+}
+
+tr.normal {
+    background-color: white;
+    color: black;
+}
+
 

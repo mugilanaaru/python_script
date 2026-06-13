@@ -29,7 +29,15 @@
                 <th>DELETE</th>
             </tr>
             {% for data in datas %}
-                <tr>
+                <tr class="
+                    {% if data.maturity_date < current_date %}
+                        expired
+                    {% elif data.maturity_date <= threshold_date %}
+                        warning
+                    {% else %}
+                        normal
+                    {% endif %}
+                ">
                     <td>{{data.ID}}</td>
                     <td>{{data.Name}}</td>
                     <td>{{data.AC_No}}</td>
