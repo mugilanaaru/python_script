@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>DEPOSITS</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+    <body>
+        <h1>Deposits Details</h1>
+
+         <a href="{{ url_for('filter_deposits') }}" target="_blank" class="btn-round">
+            Filter Deposits
+         </a>
+
+         <a href="{{ url_for('deposits_summary') }}" target="_blank" class="btn-left">View Totals by Name</a>
+
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>ACCount Number</th>
+                <th>Duration</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Maturity date</th>
+                <th>Maturity Amount</th>
+                <th>Interest</th>
+                <th>Bank</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
+            </tr>
+            {% for data in datas %}
+                <tr class="
+                    {% if data.maturity_date < current_date %}
+                        expired
+                    {% elif data.maturity_date <= threshold_date %}
+                        warning
+                    {% else %}
+                        normal
+                    {% endif %}
+                ">
+                    <td>{{data.ID}}</td>
+                    <td>{{data.Name}}</td>
+                    <td>{{data.AC_No}}</td>
+                    <td>{{data.period}}</td>
+                    <td>{{data.Principal_Amount}}</td>
+                    <td>{{data.effect_from_date}}</td>
+                    <td>{{data.maturity_date}}</td>
+                    <td>{{data.Maturity_Amount}}</td>
+                    <td>{{data.Interest}}</td>
+                    <td>{{data.Bank_Name}}</td>
+                    <td><a href="{{url_for('edituser',id=data.ID,table='deposits')}}">Edit</a></td>
+                    <td><a onclick="return confirm('Are you sure to delete {{data.Name}}?');" href="{{url_for('deleteuser',id=data.ID,table='deposits')}}">Delete</a></td>
+                </tr>
+            {% endfor %}    
+        </table>
+
+    </body>
+</html>

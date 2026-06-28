@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>MUGILAN</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+    <body>
+        <h1>Sanjeevan Agilan</h1>       
+        
+        <a href="{{ url_for('upload') }}" target="_blank" class="btn-upload">upload</a>
+
+        <h4>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {{message}}
+                    {% endfor %}    
+                {% endif %}
+            {% endwith %}  
+        </h4>
+  
+
+
+    <div class="image-row">    
+    {% for file in files %}
+        {% if file.endswith(('png','jpg','jpeg','gif')) %}
+            <img src="{{ url_for('static', filename='uploads/' ~ file) }}" ><br>
+        {% else %}
+            <p>{{ file }} is not an image.</p>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+        <div class="dropdown">
+  <button class="dropbtn">Deposits</button>
+  <div class="dropdown-content">
+    <a href="{{ url_for('home_deposits') }}" target="_blank">show deposits</a>
+    <a href="{{ url_for('adddeposits') }}" target="_blank">Add deposits</a>
+    <a href="{{ url_for('filter_deposits') }}" target="_blank">Filter Deposits</a>
+  </div>
+</div>
+
+        <div class="dropdown">
+  <button class="dropbtn">Tenant Details</button>
+  <div class="dropdown-content">
+    <a href="{{ url_for('list_tenents') }}" target="_blank">Show Tenents</a>
+    <a href="{{ url_for('add_tenents') }}" target="_blank">Add Tenents</a>
+  </div>
+</div>
+
+        <div class="dropdown">
+  <button class="dropbtn">EB Details</button>
+  <div class="dropdown-content">
+    <a href="{{ url_for('list_readings') }}" target="_blank">Show Readings</a>
+    <a href="{{ url_for('add_readings') }}" target="_blank">Add Readings</a>
+  </div>
+</div>
+
+    </body>
+</html>

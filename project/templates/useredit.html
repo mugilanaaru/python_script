@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Update Values</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Update {{ table }} details</h1>
+
+    <form action="" method="post">
+        {% if table == "Tenants" %}
+            <label>Name:</label>
+            <input type="text" name="NAME" value="{{ datas.NAME }}">
+            <label>Advance:</label>
+            <input type="text" name="Advance" value="{{ datas.Advance }}">
+            <label>EB Number:</label>
+            <input type="text" name="EB_Number" value="{{ datas.EB_Number }}">
+
+        {% elif table == "deposits" %}
+            <label>Name:</label>
+            <input type="text" name="Name" value="{{ datas.Name }}">
+            <label>Account Number:</label>
+            <input type="text" name="Account_Number" value="{{ datas.AC_No }}">
+            <label>Principal Amount:</label>
+            <input type="text" name="Principal_Amount" value="{{ datas.Principal_Amount }}">
+            <label>Date:</label>
+            <input type="Date" name="Date" value="{{ datas.effect_from_date }}">
+            <label>Maturity Date:</label>
+            <input type="date" name="Maturity_Date" value="{{ datas.maturity_date }}">
+            <label>Maturity Amount:</label>
+            <input type="text" name="Maturity_Amount" value="{{ datas.Maturity_Amount }}">
+            <label>Interest Rate:</label>
+            <input type="text" name="Interest_Rate" value="{{ datas.Interest }}">
+            <label>Bank Details:</label>
+            <input type="text" name="Bank_Details" value="{{ datas.Bank_Name }}">
+
+        {% elif table == "readings" %}
+            <label>Date:</label>
+            <input type="date" name="Date" value="{{ datas.Date }}">
+            <label>Current reading:</label>
+            <input type="text" name="Current_reading" value="{{ datas.Current_reading }}">
+            <label>Last reading:</label>
+            <input type="text" name="Last_reading" value="{{ datas.Last_reading }}">
+        {% endif %}
+
+        <input type="submit" value="Update details">
+    </form>
+</body>
+</html>
