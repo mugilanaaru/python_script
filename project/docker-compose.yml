@@ -1,8 +1,9 @@
-version: "3.9"
+version: "3.8"
 
 services:
   web:
-    build: .
+    build:
+      context: ./project   # adjust if Dockerfile is here
     container_name: flask_app
     ports:
       - "5000:5000"
@@ -19,7 +20,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: home
     ports:
-      - "3306:3306"
+      - "3307:3306"   # avoid conflict with local MySQL
     volumes:
       - mysql_data:/var/lib/mysql
 
