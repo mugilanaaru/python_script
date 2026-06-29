@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/mugilanaaru/python_script/tree/upload_functions/project'
+                git branch: 'upload_functions', url: 'https://github.com/mugilanaaru/python_script.git
+'
             }
         }
         stage('Build') {
