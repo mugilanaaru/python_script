@@ -3,7 +3,7 @@ version: "3.8"
 services:
   web:
     build:
-      context: ./project   # adjust if Dockerfile is here
+      context: .   # adjust if Dockerfile is here
     container_name: flask_app
     ports:
       - "5000:5000"
