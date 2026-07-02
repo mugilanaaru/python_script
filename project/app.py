@@ -384,5 +384,5 @@ def deposits_summary():
 #app.register_blueprint(deposits_bp)
 
 if __name__ == "__main__":
-    app.secret_key="abc123"
+#    app.secret_key="abc123"
     app.run(debug=True)
