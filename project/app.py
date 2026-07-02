@@ -13,6 +13,7 @@ from db import get_connection
 
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 
 #def get_connection():
 #    parser = configparser.ConfigParser()
