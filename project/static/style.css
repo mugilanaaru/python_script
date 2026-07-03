@@ -353,6 +353,27 @@ tr.normal {
     color: black;
 }
 
+.summary-container {
+    font-family: Arial, sans-serif;   /* font only for this box */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-block;
+    padding: 30px 50px;
+    text-align: center;               /* center only inside this box */
+}
+
+.summary-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.total-amount {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c7be5;
+}
+
 
 
 
