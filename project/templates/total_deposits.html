@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Total Deposits</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="summary-container">
+        <h1>Total Deposits</h1>
+        <p class="total-amount">₹ {{ "{:,}".format(total) }}</p>
+    </div>
+</body>
+</html>

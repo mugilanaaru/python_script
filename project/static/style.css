@@ -353,4 +353,31 @@ tr.normal {
     color: black;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    text-align: center;
+    padding: 50px;
+}
+
+.summary-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-block;
+    padding: 30px 50px;
+}
+
+.summary-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.total-amount {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c7be5;
+}
+
+
 

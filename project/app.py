@@ -379,7 +379,21 @@ def deposits_summary():
 
     return render_template("deposits_summary.html", datas=res)
 
+#################### Total Deposits ########################################
 
+@app.route("/total_deposits")
+def total_deposits():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Principal_Amount) AS total_deposits FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_deposits"] if result["total_deposits"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_deposits.html", total=total)
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
