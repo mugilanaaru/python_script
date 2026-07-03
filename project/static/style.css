@@ -390,7 +390,7 @@ tr.normal {
   /* New alignment */
   position: absolute;
     top: 20px;       /* distance from top */
-    left: 20px;     /* distance from right */
+    left: 50px;     /* distance from right */
 }
 
 .btn-total:hover {
