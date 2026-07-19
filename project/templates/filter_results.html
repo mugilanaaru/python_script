@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>MUGILAN</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+<h1>Filtered Results</h1>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Name</th><th>Account No</th><th>Period</th>
+        <th>Principal Amount</th><th>Start Date</th><th>Maturity Date</th>
+        <th>Maturity Amount</th><th>Interest</th><th>Bank</th>
+    </tr>
+    {% for d in datas %}
+    <tr>
+        <td>{{ d.ID }}</td>
+        <td>{{ d.Name }}</td>
+        <td>{{ d.AC_No }}</td>
+        <td>{{ d.period }}</td>
+        <td>{{ d.Principal_Amount }}</td>
+        <td>{{ d.effect_from_date }}</td>
+        <td>{{ d.maturity_date }}</td>
+        <td>{{ d.Maturity_Amount }}</td>
+        <td>{{ d.Interest }}</td>
+        <td>{{ d.Bank_Name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</html>

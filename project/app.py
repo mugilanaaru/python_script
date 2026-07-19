@@ -1,25 +1,41 @@
 from flask import Flask, render_template,url_for,redirect,request,flash
 from datetime import date, datetime, timedelta
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from utils.period_cal import calculate_period   #### module for date difference calculate
 #from deposits import deposits_bp
 import pymysql          #####  module for mysql connect
 import configparser     ##### module for config.ini file
 from werkzeug.utils import secure_filename
+from db import get_connection
+
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 
-def get_connection():
-    parser = configparser.ConfigParser()
-    parser.read("db_config.ini")
+#def get_connection():
+#    parser = configparser.ConfigParser()
+#    parser.read("db_config.ini")
+#
+#    return pymysql.connect(
+#        host=parser["mysql"]["host"],
+#        user=parser["mysql"]["user"],
+#        password=parser["mysql"]["password"],
+#        database=parser["mysql"]["database"],
+#        cursorclass=pymysql.cursors.DictCursor
+#    )
 
-    return pymysql.connect(
-        host=parser["mysql"]["host"],
-        user=parser["mysql"]["user"],
-        password=parser["mysql"]["password"],
-        database=parser["mysql"]["database"],
-        cursorclass=pymysql.cursors.DictCursor
-    )
+##def get_connection():
+##    return pymysql.connect(
+##        host=os.getenv("DB_HOST", "db"),        # default to "db"
+##        user=os.getenv("DB_USER", "root"),
+##        password=os.getenv("DB_PASSWORD", "root"),
+##        database=os.getenv("DB_NAME", "home"),
+##        port=int(os.getenv("DB_PORT", 3306)),
+##        cursorclass=pymysql.cursors.DictCursor
+##    )
 
 ##########################################
 
@@ -363,11 +379,25 @@ def deposits_summary():
 
     return render_template("deposits_summary.html", datas=res)
 
+####################### Total deposits ######################
+@app.route("/total_deposits")
+def total_deposits():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Principal_Amount) AS total_deposits FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_deposits"] if result["total_deposits"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_deposits.html", total=total)
 
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
 
 if __name__ == "__main__":
-    app.secret_key="abc123"
+#    app.secret_key="abc123"
     app.run(debug=True)

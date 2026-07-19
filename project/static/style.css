@@ -353,4 +353,50 @@ tr.normal {
     color: black;
 }
 
+.summary-container {
+    font-family: Arial, sans-serif;   /* font only for this box */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-block;
+    padding: 30px 50px;
+    text-align: center;               /* center only inside this box */
+}
+
+.summary-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.total-amount {
+    font-size: 2em;
+    font-weight: bold;
+    color: #2c7be5;
+}
+
+.btn-total {
+    background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  /* New alignment */
+  position: absolute;
+    top: 20px;       /* distance from top */
+    left: 300px;     /* distance from right */
+}
+
+.btn-total:hover {
+    background-color: #be98e6;   /* darker blue on hover */
+    transform: translateY(-2px); /* subtle lift effect */
+}
+
+
 

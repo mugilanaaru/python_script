@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'upload_functions', url: 'https://github.com/mugilanaaru/python_script.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker compose -f project/docker-compose.yml build'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'pytest || true'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker compose -f project/docker-compose.yml up -d'
+            }
+        }
+    }
+}

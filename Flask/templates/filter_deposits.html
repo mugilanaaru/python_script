@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>MUGILAN</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"
+    </head>
+<head>
+    <title>Filter Deposits</title>
+</head>
+<body>
+    <h1>Filter Deposits</h1>
+    <form method="POST">
+        <label>Select Filter Option:</label>
+        <select name="option">
+            <option value="1">By Name</option>
+            <option value="2">By Account Number</option>
+            <option value="3">By Period</option>
+            <option value="4">By Principal Amount</option>
+            <option value="5">By Start Date</option>
+            <option value="6">By Maturity Date</option>
+            <option value="7">By Maturity Amount</option>
+            <option value="8">By Interest</option>
+            <option value="9">By Bank</option>
+        </select>
+        <br><br>
+        <label>Enter Value:</label>
+        <input type="text" name="value" required>
+        <br><br>
+        <button type="submit">Filter</button>
+    </form>
+
+    {% if datas %}
+    <h2>Results</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Name</th><th>Account No</th><th>Period</th>
+            <th>Principal Amount</th><th>Start Date</th><th>Maturity Date</th>
+            <th>Maturity Amount</th><th>Interest</th><th>Bank</th>
+        </tr>
+        {% for d in datas %}
+        <tr>
+            <td>{{ d.ID }}</td>
+            <td>{{ d.Name }}</td>
+            <td>{{ d.AC_No }}</td>
+            <td>{{ d.period }}</td>
+            <td>{{ d.Principal_Amount }}</td>
+            <td>{{ d.effect_from_date }}</td>
+            <td>{{ d.maturity_date }}</td>
+            <td>{{ d.Maturity_Amount }}</td>
+            <td>{{ d.Interest }}</td>
+            <td>{{ d.Bank_Name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
+</html>
