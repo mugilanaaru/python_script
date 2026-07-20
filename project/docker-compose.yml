@@ -18,9 +18,8 @@ services:
     image: mysql:8.0
     container_name: mysql_db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: home
+    env_file:
+      - .env        # load MYSQL_ROOT_PASSWORD and MYSQL_DATABASE from here
     ports:
       - "3307:3306"   # avoid conflict with local MySQL
     volumes:
