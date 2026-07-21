@@ -12,7 +12,9 @@ pipeline {
         }
         stage('Build') {
             steps {
+                // Build using docker-compose (flask_app:latest will be created)
                 sh "docker compose -f project/docker-compose.yml build"
+                // Tag with Jenkins build number for versioning
                 sh "docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION}"
             }
         }

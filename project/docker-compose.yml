@@ -3,7 +3,8 @@ version: "3.8"
 services:
   web:
     build:
-      context: .   # adjust if Dockerfile is here
+      context: .
+    image: flask_app:latest   # ✅ Explicit image name
     container_name: flask_app
     ports:
       - "5000:5000"
@@ -19,9 +20,9 @@ services:
     container_name: mysql_db
     restart: always
     env_file:
-      - .env        # load MYSQL_ROOT_PASSWORD and MYSQL_DATABASE from here
+      - .env
     ports:
-      - "3307:3306"   # avoid conflict with local MySQL
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
