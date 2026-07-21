@@ -3,6 +3,7 @@ pipeline {
     environment {
         IMAGE_NAME = "flask_app"
         VERSION = "${env.BUILD_NUMBER}"   // Jenkins build number as version
+        REGISTRY = "mugilaaru"            // Docker Hub username or AWS ECR repo
     }
     stages {
         stage('Checkout') {
@@ -12,15 +13,26 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Build using docker-compose (flask_app:latest will be created)
+                // Build image as flask_app:latest
                 sh "docker compose -f project/docker-compose.yml build"
-                // Tag with Jenkins build number for versioning
-                sh "docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION}"
+                // Tag with Jenkins build number
+                sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:${VERSION}"
+                sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:latest"
+            }
+        }
+        stage('Push to Registry') {
+            steps {
+                // Login to Docker Hub (credentials stored in Jenkins)
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                }
+                // Push both versioned and latest tags
+                sh "docker push ${REGISTRY}/${IMAGE_NAME}:${VERSION}"
+                sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
             }
         }
         stage('Archive Artifacts') {
             steps {
-                // Save version info as artifact
                 sh "echo Build version: ${VERSION} > build-info.txt"
                 archiveArtifacts artifacts: 'build-info.txt', fingerprint: true
             }
