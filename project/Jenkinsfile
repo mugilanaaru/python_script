@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        IMAGE_NAME = "flask_app"
+        VERSION = "${env.BUILD_NUMBER}"   // Jenkins build number as version
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -8,17 +12,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker compose -f project/docker-compose.yml build'
+                sh "docker compose -f project/docker-compose.yml build"
+                sh "docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:${VERSION}"
             }
         }
-        stage('Test') {
+        stage('Archive Artifacts') {
             steps {
-                sh 'pytest || true'
+                // Save version info as artifact
+                sh "echo Build version: ${VERSION} > build-info.txt"
+                archiveArtifacts artifacts: 'build-info.txt', fingerprint: true
             }
         }
         stage('Deploy') {
             steps {
-                sh 'docker compose -f project/docker-compose.yml up -d'
+                sh "docker compose -f project/docker-compose.yml up -d"
             }
         }
     }
