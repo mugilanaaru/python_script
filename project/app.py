@@ -404,7 +404,7 @@ def total_maturity():
             sql = "SELECT SUM(Maturity_Amount) AS total_maturity FROM deposits"
             cursor.execute(sql)
             result = cursor.fetchone()
-            total = result["total_deposits"] if result["total_deposits"] else 0
+            total = result["total_maturity"] if result["total_maturity"] else 0
     finally:
         conn.close()
 
