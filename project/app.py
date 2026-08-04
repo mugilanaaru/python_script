@@ -394,6 +394,22 @@ def total_deposits():
 
     return render_template("total_deposits.html", total=total)
 
+################################################################################
+########################  Total maturity deposits ######################
+@app.route("/total_maturity")
+def total_maturity():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Maturity_Amount) AS total_maturity FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_deposits"] if result["total_deposits"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_maturity.html", total=total)
+
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
