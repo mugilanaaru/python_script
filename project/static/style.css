@@ -414,7 +414,7 @@ tr.normal {
   /* New alignment */
   position: absolute;
     top: 20px;       /* distance from top */
-    right: 50px;     /* distance from right */
+    right: 150px;     /* distance from right */
 }
 
 .btn-maturity:hover {
