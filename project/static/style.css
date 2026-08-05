@@ -422,5 +422,13 @@ tr.normal {
     transform: translateY(-2px); /* subtle lift effect */
 }
 
+/* adding this for spacing investments */
+/* Navigation bar container for dropdowns */
+.navbar {
+  display: flex;          /* puts dropdowns side by side */
+  gap: 20px;              /* spacing between dropdowns */
+  flex-wrap: wrap;        /* allows wrapping on smaller screens */
+  align-items: flex-start; /* keeps them aligned neatly */
+}
 
 
