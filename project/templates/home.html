@@ -30,7 +30,9 @@
     {% endfor %}
     </div>
 
-        <div class="dropdown">
+
+    
+    <div class="dropdown">
   <button class="dropbtn">Deposits</button>
   <div class="dropdown-content">
     <a href="{{ url_for('home_deposits') }}" target="_blank">show deposits</a>
@@ -52,6 +54,14 @@
   <div class="dropdown-content">
     <a href="{{ url_for('list_readings') }}" target="_blank">Show Readings</a>
     <a href="{{ url_for('add_readings') }}" target="_blank">Add Readings</a>
+  </div>
+  </div>
+
+        <div class="dropdown">
+  <button class="dropbtn">Invesments</button>
+  <div class="dropdown-content">
+    <a href="{{ url_for('ornamnet') }}" target="_blank">ornaments</a>
+    <a href="{{ url_for('add_ornamnets') }}" target="_blank">Add ornamnents</a>
   </div>
 </div>
 

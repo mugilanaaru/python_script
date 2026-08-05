@@ -222,6 +222,14 @@ def edituser(table, id):
                 sql = "UPDATE readings SET Date=%s, Current_reading=%s, Last_reading=%s, total_reading=%s, eb_amount=%s, total_amount=%s  WHERE ID=%s"
                 cursor.execute(sql, [Date, Current_reading, Last_reading, total_reading, eb_amount, total_amount, id])
 
+            elif table == "ornamnet":
+                NAME = request.form['name']
+                material = request.form['material']
+                measurement = request.form['measurement']
+                description = request.form['description']
+                sql = "UPDATE Tenants SET name=%s, material=%s, measurement=%s, description=%s, WHERE ID=%s"
+                cursor.execute(sql, [NAME, material, measurement, description, id])
+
             else:
                 flash("Invalid table specified")
                 return redirect(url_for("home"))
@@ -260,6 +268,11 @@ def deleteuser(id, table):
 
             elif table == "readings":
                 sql = "DELETE FROM readings WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('readings record deleted')
+
+            elif table == "ornamnet":
+                sql = "DELETE FROM ornamnet WHERE ID=%s"
                 cursor.execute(sql, (id,))
                 flash('readings record deleted')
 
@@ -318,6 +331,44 @@ def add_readings():
         return redirect(url_for("list_readings"))
     return render_template("add_readings.html")
 
+###############################################################################################
+################################### Ornamnets ##########################################
+
+###### ornaments list #########
+@app.route("/ornamnet")
+def ornamnet():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM ornamnet"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+    return render_template("ornamnet.html", datas=res)
+
+
+###### Add Onamnets ###########################
+
+@app.route("/add_ornamnets",methods=['GET','POST'])
+def add_ornamnets():
+    if request.method=='POST':
+        Name=request.form['name']
+        Material=request.form['material']
+        Measurement=request.form['measurement']
+        Description=request.form['description']
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into ornamnet(name,Material,Measurement,Description) values (%s,%s,%s,%s)"
+            cursor.execute(sql,[Name,Material,Measurement,Description])
+        conn.commit()
+        conn.close()
+        flash('details added')
+        return redirect(url_for("ornamnet"))
+    return render_template("add_ornamnets.html")
+
+##################################
 
 ###################### Adding for filter ##############################
 @app.route("/filter_deposits", methods=['GET', 'POST'])
