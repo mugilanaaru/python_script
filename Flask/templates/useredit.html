@@ -40,6 +40,16 @@
             <input type="text" name="Current_reading" value="{{ datas.Current_reading }}">
             <label>Last reading:</label>
             <input type="text" name="Last_reading" value="{{ datas.Last_reading }}">
+
+        {% elif table == "ornament" %}
+            <label>Date:</label>
+            <input type="text" name="name" value="{{ datas.name }}">
+            <label>Material:</label>
+            <input type="text" name="material" value="{{ datas.material }}">
+            <label>Measurement:</label>
+            <input type="text" name="measurement" value="{{ datas.measurement }}">
+            <label>Description:</label>
+            <input type="text" name="description" value="{{ datas.description }}">
         {% endif %}
 
         <input type="submit" value="Update details">
