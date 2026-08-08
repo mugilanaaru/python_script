@@ -161,6 +161,64 @@ def adddeposits():
         return redirect(url_for("home_deposits"))
     return render_template("add_deposits.html")
 
+####################################################################################
+#### for Investments PPF ######
+@app.route("/PPF.html")
+def home_ppf():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM PPF"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+
+    # Convert maturity_date to a proper date object if it’s a string        #### newly added for maturity date to show warning
+    for row in res:
+        if isinstance(row['maturity_date'], str):
+            row['maturity_date'] = datetime.strptime(row['maturity_date'], "%Y-%m-%d").date()
+
+    # Pass both today and threshold date (today + 30 days)
+    return render_template(
+        "PPF.html",
+        datas=res,
+        current_date=date.today(),
+        threshold_date=date.today() + timedelta(days=30))
+    #return render_template("deposits.html", datas=res)     #### normal on commented out
+
+@app.route("/add_ppf",methods=['GET','POST'])
+def add_ppf():
+    if request.method=='POST':
+        Name=request.form['Name']
+        Account_Number=request.form['Account_Number']
+#        period=request.form['period']
+        Principal_Amount=request.form['Principal_Amount']
+        Date=request.form['Date']
+        Maturity_Date=request.form['Maturity_Date']
+        Maturity_Amount=request.form['Maturity_Amount']
+        Interest_Rate=f"{request.form['Interest_Rate']}%"
+        Bank_Details=request.form['Bank_Details']
+
+        # Call helper function to calculate period
+        period_days, period_readable = calculate_period(Date, Maturity_Date)
+
+        # Decide what to store (days or readable string)
+        period = period_readable   # or use period_readable
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into PPF(Name,AC_NO,period,Principal_Amount, effect_from_date,maturity_date,Maturity_Amount,Interest,Bank_Name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,[Name,Account_Number,period,Principal_Amount,Date,Maturity_Date,Maturity_Amount,Interest_Rate,Bank_Details])
+        conn.commit()
+        conn.close()
+        flash('User details added')
+        return redirect(url_for("home_ppf"))
+    return render_template("add_ppf.html")
+
+
+
+
 #user insert
 @app.route("/add_user",methods=['GET','POST'])
 def add_tenents():
@@ -276,6 +334,11 @@ def deleteuser(id, table):
                 cursor.execute(sql, (id,))
                 flash('readings record deleted')
 
+            elif table == "PPF":
+                sql = "DELETE FROM PPF WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('Deposit record deleted')
+
             else:
                 flash('Invalid table specified')
 
@@ -313,7 +376,7 @@ def add_readings():
         maintanence = 350
         total_amount = int(eb_amount) + int(maintanence)
         names = {
-            "109": "Gunasekar",
+            "109": "Thiruvengadam",
             "189": "Velu",
             "191": "Indumathi Tamizharasan",
             "190": "Sampath",

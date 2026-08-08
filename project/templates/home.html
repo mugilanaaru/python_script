@@ -57,13 +57,31 @@
   </div>
   </div>
 
+        
         <div class="dropdown">
-  <button class="dropbtn">Invesments</button>
-  <div class="dropdown-content">
-    <a href="{{ url_for('ornamnet') }}" target="_blank">ornaments</a>
-    <a href="{{ url_for('add_ornamnets') }}" target="_blank">Add ornamnents</a>
+  <button class="dropbtn">Investments</button>
+  <div class="dropdown-content"> 
+
+    <!-- PPF with nested dropdown -->
+    <div class="sub-dropdown">
+      <a href="#">PPF ▸</a>
+      <div class="sub-dropdown-content">
+        <a href="{{ url_for('home_ppf') }}" target="_blank">PPF</a>
+        <a href="{{ url_for('add_ppf') }}" target="_blank">Add PPF</a>
+      </div>
+    </div>
+
+    <!-- Material with nested dropdown -->
+    <div class="sub-dropdown">
+      <a href="#">Material ▸</a>
+      <div class="sub-dropdown-content">
+        <a href="{{ url_for('ornamnet') }}" target="_blank">Ornaments</a>
+        <a href="{{ url_for('add_ornamnets') }}" target="_blank">Add Ornaments</a>
+      </div>
+    </div>
   </div>
 </div>
+
 
     </body>
 </html>
