@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - mysql
     volumes:
       - ./static/uploads:/app/static/uploads
 
