@@ -529,5 +529,6 @@ def total_maturity():
 #app.register_blueprint(deposits_bp)
 
 if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
 #    app.secret_key="abc123"
-    app.run(debug=True)
+#    app.run(debug=True)
