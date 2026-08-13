@@ -15,7 +15,7 @@ services:
     volumes:
       - ./static/uploads:/app/static/uploads
 
-  db:
+  mysql:
     image: mysql:8.0
     container_name: mysql_db
     restart: always
