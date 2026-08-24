@@ -161,6 +161,64 @@ def adddeposits():
         return redirect(url_for("home_deposits"))
     return render_template("add_deposits.html")
 
+####################################################################################
+#### for Investments PPF ######
+@app.route("/PPF.html")
+def home_ppf():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM PPF"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+
+    # Convert maturity_date to a proper date object if it’s a string        #### newly added for maturity date to show warning
+    for row in res:
+        if isinstance(row['maturity_date'], str):
+            row['maturity_date'] = datetime.strptime(row['maturity_date'], "%Y-%m-%d").date()
+
+    # Pass both today and threshold date (today + 30 days)
+    return render_template(
+        "PPF.html",
+        datas=res,
+        current_date=date.today(),
+        threshold_date=date.today() + timedelta(days=30))
+    #return render_template("deposits.html", datas=res)     #### normal on commented out
+
+@app.route("/add_ppf",methods=['GET','POST'])
+def add_ppf():
+    if request.method=='POST':
+        Name=request.form['Name']
+        Account_Number=request.form['Account_Number']
+#        period=request.form['period']
+        Principal_Amount=request.form['Principal_Amount']
+        Date=request.form['Date']
+        Maturity_Date=request.form['Maturity_Date']
+        Maturity_Amount=request.form['Maturity_Amount']
+        Interest_Rate=f"{request.form['Interest_Rate']}%"
+        Bank_Details=request.form['Bank_Details']
+
+        # Call helper function to calculate period
+        period_days, period_readable = calculate_period(Date, Maturity_Date)
+
+        # Decide what to store (days or readable string)
+        period = period_readable   # or use period_readable
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into PPF(Name,AC_NO,period,Principal_Amount, effect_from_date,maturity_date,Maturity_Amount,Interest,Bank_Name) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,[Name,Account_Number,period,Principal_Amount,Date,Maturity_Date,Maturity_Amount,Interest_Rate,Bank_Details])
+        conn.commit()
+        conn.close()
+        flash('User details added')
+        return redirect(url_for("home_ppf"))
+    return render_template("add_ppf.html")
+
+
+
+
 #user insert
 @app.route("/add_user",methods=['GET','POST'])
 def add_tenents():
@@ -222,6 +280,14 @@ def edituser(table, id):
                 sql = "UPDATE readings SET Date=%s, Current_reading=%s, Last_reading=%s, total_reading=%s, eb_amount=%s, total_amount=%s  WHERE ID=%s"
                 cursor.execute(sql, [Date, Current_reading, Last_reading, total_reading, eb_amount, total_amount, id])
 
+            elif table == "ornamnet":
+                NAME = request.form['name']
+                material = request.form['material']
+                measurement = request.form['measurement']
+                description = request.form['description']
+                sql = "UPDATE Tenants SET name=%s, material=%s, measurement=%s, description=%s, WHERE ID=%s"
+                cursor.execute(sql, [NAME, material, measurement, description, id])
+
             else:
                 flash("Invalid table specified")
                 return redirect(url_for("home"))
@@ -263,6 +329,16 @@ def deleteuser(id, table):
                 cursor.execute(sql, (id,))
                 flash('readings record deleted')
 
+            elif table == "ornamnet":
+                sql = "DELETE FROM ornamnet WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('readings record deleted')
+
+            elif table == "PPF":
+                sql = "DELETE FROM PPF WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('Deposit record deleted')
+
             else:
                 flash('Invalid table specified')
 
@@ -300,7 +376,7 @@ def add_readings():
         maintanence = 350
         total_amount = int(eb_amount) + int(maintanence)
         names = {
-            "109": "Gunasekar",
+            "109": "Thiruvengadam",
             "189": "Velu",
             "191": "Indumathi Tamizharasan",
             "190": "Sampath",
@@ -318,6 +394,44 @@ def add_readings():
         return redirect(url_for("list_readings"))
     return render_template("add_readings.html")
 
+###############################################################################################
+################################### Ornamnets ##########################################
+
+###### ornaments list #########
+@app.route("/ornamnet")
+def ornamnet():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM ornamnet"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+    return render_template("ornamnet.html", datas=res)
+
+
+###### Add Onamnets ###########################
+
+@app.route("/add_ornamnets",methods=['GET','POST'])
+def add_ornamnets():
+    if request.method=='POST':
+        Name=request.form['name']
+        Material=request.form['material']
+        Measurement=request.form['measurement']
+        Description=request.form['description']
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into ornamnet(name,Material,Measurement,Description) values (%s,%s,%s,%s)"
+            cursor.execute(sql,[Name,Material,Measurement,Description])
+        conn.commit()
+        conn.close()
+        flash('details added')
+        return redirect(url_for("ornamnet"))
+    return render_template("add_ornamnets.html")
+
+##################################
 
 ###################### Adding for filter ##############################
 @app.route("/filter_deposits", methods=['GET', 'POST'])
@@ -394,10 +508,27 @@ def total_deposits():
 
     return render_template("total_deposits.html", total=total)
 
+################################################################################
+########################  Total maturity deposits ######################
+@app.route("/total_maturity")
+def total_maturity():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Maturity_Amount) AS total_maturity FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_maturity"] if result["total_maturity"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_maturity.html", total=total)
+
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
 
 if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
 #    app.secret_key="abc123"
-    app.run(debug=True)
+#    app.run(debug=True)

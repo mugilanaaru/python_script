@@ -1,25 +1,41 @@
 from flask import Flask, render_template,url_for,redirect,request,flash
 from datetime import date, datetime, timedelta
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from utils.period_cal import calculate_period   #### module for date difference calculate
 #from deposits import deposits_bp
 import pymysql          #####  module for mysql connect
 import configparser     ##### module for config.ini file
 from werkzeug.utils import secure_filename
+from db import get_connection
+
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 
-def get_connection():
-    parser = configparser.ConfigParser()
-    parser.read("db_config.ini")
+#def get_connection():
+#    parser = configparser.ConfigParser()
+#    parser.read("db_config.ini")
+#
+#    return pymysql.connect(
+#        host=parser["mysql"]["host"],
+#        user=parser["mysql"]["user"],
+#        password=parser["mysql"]["password"],
+#        database=parser["mysql"]["database"],
+#        cursorclass=pymysql.cursors.DictCursor
+#    )
 
-    return pymysql.connect(
-        host=parser["mysql"]["host"],
-        user=parser["mysql"]["user"],
-        password=parser["mysql"]["password"],
-        database=parser["mysql"]["database"],
-        cursorclass=pymysql.cursors.DictCursor
-    )
+##def get_connection():
+##    return pymysql.connect(
+##        host=os.getenv("DB_HOST", "db"),        # default to "db"
+##        user=os.getenv("DB_USER", "root"),
+##        password=os.getenv("DB_PASSWORD", "root"),
+##        database=os.getenv("DB_NAME", "home"),
+##        port=int(os.getenv("DB_PORT", 3306)),
+##        cursorclass=pymysql.cursors.DictCursor
+##    )
 
 ##########################################
 
@@ -206,6 +222,14 @@ def edituser(table, id):
                 sql = "UPDATE readings SET Date=%s, Current_reading=%s, Last_reading=%s, total_reading=%s, eb_amount=%s, total_amount=%s  WHERE ID=%s"
                 cursor.execute(sql, [Date, Current_reading, Last_reading, total_reading, eb_amount, total_amount, id])
 
+            elif table == "ornamnet":
+                NAME = request.form['name']
+                material = request.form['material']
+                measurement = request.form['measurement']
+                description = request.form['description']
+                sql = "UPDATE Tenants SET name=%s, material=%s, measurement=%s, description=%s, WHERE ID=%s"
+                cursor.execute(sql, [NAME, material, measurement, description, id])
+
             else:
                 flash("Invalid table specified")
                 return redirect(url_for("home"))
@@ -244,6 +268,11 @@ def deleteuser(id, table):
 
             elif table == "readings":
                 sql = "DELETE FROM readings WHERE ID=%s"
+                cursor.execute(sql, (id,))
+                flash('readings record deleted')
+
+            elif table == "ornamnet":
+                sql = "DELETE FROM ornamnet WHERE ID=%s"
                 cursor.execute(sql, (id,))
                 flash('readings record deleted')
 
@@ -302,6 +331,44 @@ def add_readings():
         return redirect(url_for("list_readings"))
     return render_template("add_readings.html")
 
+###############################################################################################
+################################### Ornamnets ##########################################
+
+###### ornaments list #########
+@app.route("/ornamnet")
+def ornamnet():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT * FROM ornamnet"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+    finally:
+        conn.close()
+    return render_template("ornamnet.html", datas=res)
+
+
+###### Add Onamnets ###########################
+
+@app.route("/add_ornamnets",methods=['GET','POST'])
+def add_ornamnets():
+    if request.method=='POST':
+        Name=request.form['name']
+        Material=request.form['material']
+        Measurement=request.form['measurement']
+        Description=request.form['description']
+
+        conn= get_connection()
+        with conn.cursor() as cursor:
+            sql="insert into ornamnet(name,Material,Measurement,Description) values (%s,%s,%s,%s)"
+            cursor.execute(sql,[Name,Material,Measurement,Description])
+        conn.commit()
+        conn.close()
+        flash('details added')
+        return redirect(url_for("ornamnet"))
+    return render_template("add_ornamnets.html")
+
+##################################
 
 ###################### Adding for filter ##############################
 @app.route("/filter_deposits", methods=['GET', 'POST'])
@@ -363,11 +430,41 @@ def deposits_summary():
 
     return render_template("deposits_summary.html", datas=res)
 
+####################### Total deposits ######################
+@app.route("/total_deposits")
+def total_deposits():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Principal_Amount) AS total_deposits FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_deposits"] if result["total_deposits"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_deposits.html", total=total)
+
+################################################################################
+########################  Total maturity deposits ######################
+@app.route("/total_maturity")
+def total_maturity():
+    conn = get_connection()
+    try:
+        with conn.cursor() as cursor:
+            sql = "SELECT SUM(Maturity_Amount) AS total_maturity FROM deposits"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            total = result["total_maturity"] if result["total_maturity"] else 0
+    finally:
+        conn.close()
+
+    return render_template("total_maturity.html", total=total)
 
 
 ## Register blueprints
 #app.register_blueprint(deposits_bp)
 
 if __name__ == "__main__":
-    app.secret_key="abc123"
+#    app.secret_key="abc123"
     app.run(debug=True)
