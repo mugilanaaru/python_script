@@ -288,6 +288,25 @@ def edituser(table, id):
                 sql = "UPDATE Tenants SET name=%s, material=%s, measurement=%s, description=%s, WHERE ID=%s"
                 cursor.execute(sql, [NAME, material, measurement, description, id])
 
+            elif table == "PPF":
+                            Name = request.form['Name']
+                            Account_Number = request.form['Account_Number']
+                            Principal_Amount = request.form['Principal_Amount']
+                            Date = request.form['Date']
+                            Maturity_Date = request.form['Maturity_Date']
+                            Maturity_Amount = request.form['Maturity_Amount']
+                            Interest_Rate=request.form['Interest_Rate']
+                            Bank_Details = request.form['Bank_Details']
+            
+                            # Call helper function to calculate period
+                            period_days, period_readable = calculate_period(Date, Maturity_Date)
+            
+                            # Decide what to store (days or readable string)
+                            period = period_readable   # or use period_readable
+            
+                            sql = "UPDATE PPF SET Name=%s, AC_No=%s, period=%s, Principal_Amount=%s, effect_from_date=%s, Maturity_Date=%s, Maturity_Amount=%s, Interest=%s, Bank_Name=%s  WHERE ID=%s"
+                            cursor.execute(sql, [Name, Account_Number, period, Principal_Amount, Date, Maturity_Date, Maturity_Amount, Interest_Rate, Bank_Details, id])
+
             else:
                 flash("Invalid table specified")
                 return redirect(url_for("home"))
