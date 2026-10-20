@@ -1,0 +1,8 @@
+.env
+db.py
+config.py
+db_config.ini
+flask-secrets.yaml
+dockerhub-secret.yaml
+secret.txt
+secrt.tx
