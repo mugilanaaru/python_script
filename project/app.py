@@ -1,4 +1,5 @@
-from flask import Flask, render_template,url_for,redirect,request,flash
+from flask import Flask, render_template, url_for, redirect, request, flash, session
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date, datetime, timedelta
 import os
 from dotenv import load_dotenv
@@ -38,7 +39,117 @@ app.secret_key = os.getenv("SECRET_KEY", os.urandom(24))
 ##    )
 
 ##########################################
+#################### Adding this for user login #####################
+# Login route
+##########################################
+# USER SIGNUP AND LOGIN
+##########################################
 
+# Signup route
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+
+    if request.method == "POST":
+
+        name = request.form["name"].strip()
+        username = request.form["username"].strip()
+        password = request.form["password"]
+        confirm_password = request.form["confirm_password"]
+
+        if password != confirm_password:
+            flash("Passwords do not match")
+            return redirect(url_for("signup"))
+
+        if len(password) < 8:
+            flash("Password must contain at least 8 characters")
+            return redirect(url_for("signup"))
+
+        password_hash = generate_password_hash(password)
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO users (name, username, password_hash) "
+                    "VALUES (%s, %s, %s)",
+                    (name, username, password_hash)
+                )
+
+            conn.commit()
+            flash("Registration successful. Please login.")
+            return redirect(url_for("login"))
+
+        except pymysql.err.IntegrityError:
+            conn.rollback()
+            flash("Username already exists")
+
+        finally:
+            conn.close()
+
+    return render_template("signup.html")
+
+
+# Login route
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form["username"].strip()
+        password = request.form["password"]
+
+        conn = get_connection()
+
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "SELECT id, name, username, password_hash "
+                    "FROM users WHERE username=%s",
+                    (username,)
+                )
+                user = cursor.fetchone()
+
+        finally:
+            conn.close()
+
+        if user and check_password_hash(
+            user["password_hash"], password
+        ):
+            session.clear()
+            session["user_id"] = user["id"]
+            session["username"] = user["username"]
+
+            return redirect(url_for("home"))
+
+        flash("Invalid username or password")
+
+    return render_template("login.html")
+
+
+# Logout route
+@app.route("/logout", methods=["POST"])
+def logout():
+
+    session.clear()
+
+    return redirect(url_for("login"))
+
+
+# Protect all application routes
+@app.before_request
+def require_login():
+
+    allowed_routes = ["login", "signup", "static"]
+
+    if request.endpoint not in allowed_routes:
+
+        if "user_id" not in session:
+            return redirect(url_for("login"))
+
+
+##########################################
+#####################################################
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

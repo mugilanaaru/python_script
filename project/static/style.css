@@ -451,3 +451,37 @@ tr.normal {
 .sub-dropdown:hover .sub-dropdown-content {
   display: block;
 }
+
+/* Fix logout form position and remove white box */
+form.logout-form {
+    all: unset;
+    position: fixed;
+    top: 20px;
+    left: 100px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    max-width: none;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+/* Logout button */
+button.btn-logout {
+    background-color: #aa0417;
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button.btn-logout:hover {
+    background-color: #b30012;
+    transform: translateY(-2px);
+}

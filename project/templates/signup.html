@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Signup</title>
+</head>
+<body>
+
+<h2>Create New Account</h2>
+
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+{% endwith %}
+
+<form method="POST">
+
+    <label>Full Name:</label>
+    <input type="text" name="name"
+           placeholder="Full Name" required>
+
+    <br><br>
+
+    <label>Username:</label>
+    <input type="text" name="username"
+           placeholder="Choose Username" required>
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password"
+           placeholder="Password (minimum 8 characters)"
+           minlength="8" required>
+
+    <br><br>
+
+    <label>Confirm Password:</label>
+    <input type="password" name="confirm_password"
+           placeholder="Confirm Password" required>
+
+    <br><br>
+
+    <button type="submit">Sign Up</button>
+
+</form>
+
+<p>Already registered?
+<a href="{{ url_for('login') }}">Login here</a>
+</p>
+
+</body>
+</html>
