@@ -1,5 +1,5 @@
 #.env
-db.py
+#db.py
 config.py
 db_config.ini
 flask-secrets.yaml
